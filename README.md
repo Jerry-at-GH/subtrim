@@ -63,15 +63,76 @@ the CSV contains `timestamp_ms`, `max_channel_error` and `active_mean_error`, wi
 
 ## libass runtime
 
-`optimize` and `compare` require libass and its dependencies for the same architecture as subtrim. subtrim does not install them automatically.
+`optimize` and `compare` need libass. install it for the same architecture as subtrim. package managers install its dependencies automatically.
 
-| platform | library | default location |
-|---|---|---|
-| Windows | `libass-9.dll` | beside `subtrim.exe` |
-| Linux | `libass.so.9` | system loader's search path |
-| macOS | `libass.dylib` | system loader's search path |
+<details>
+<summary>Windows</summary>
 
-use `--libass FILE` for another location. dependencies must be available to the system loader; on Windows, keep dependency DLLs beside libass. Windows PATH alone does not select the library.
+install [MSYS2](https://www.msys2.org/), open its UCRT64 terminal and run:
+
+```sh
+pacman -S mingw-w64-ucrt-x86_64-libass
+```
+
+with the default MSYS2 installation, use:
+
+```powershell
+subtrim optimize -O2 --libass C:\msys64\ucrt64\bin\libass-9.dll --output output.ass input.ass
+```
+
+alternatively, put `libass-9.dll` and its dependency DLLs beside `subtrim.exe` to omit `--libass`. the MSYS2 UCRT64 runtime used here contains these DLLs; other builds may differ:
+
+```text
+libass-9.dll
+libbrotlicommon.dll
+libbrotlidec.dll
+libbz2-1.dll
+libexpat-1.dll
+libfontconfig-1.dll
+libfreetype-6.dll
+libfribidi-0.dll
+libgcc_s_seh-1.dll
+libglib-2.0-0.dll
+libgraphite2.dll
+libharfbuzz-0.dll
+libiconv-2.dll
+libintl-8.dll
+libpcre2-8-0.dll
+libpng16-16.dll
+libstdc++-6.dll
+libunibreak-7.dll
+libwinpthread-1.dll
+zlib1.dll
+```
+
+</details>
+
+<details>
+<summary>Linux</summary>
+
+on Debian or Ubuntu:
+
+```sh
+sudo apt install libass9
+```
+
+on other distributions, install the libass runtime through their package manager. subtrim loads `libass.so.9` from the system library path; use `--libass FILE` for another location.
+
+</details>
+
+<details>
+<summary>macOS</summary>
+
+install through [Homebrew](https://formulae.brew.sh/formula/libass), then pass the library location:
+
+```sh
+brew install libass
+subtrim optimize -O2 --libass "$(brew --prefix libass)/lib/libass.dylib" --output output.ass input.ass
+```
+
+`--libass` can be omitted when `libass.dylib` is already in the system loader's search path.
+
+</details>
 
 ## build
 
