@@ -82,3 +82,12 @@ go build -trimpath -o subtrim ./cmd/subtrim
 ```
 
 use `subtrim.exe` as the output name on Windows. set `CGO_ENABLED=1` if cgo is disabled and `CC` if the compiler is not detected automatically. libass is loaded at runtime; its headers and library are not required to compile subtrim.
+
+## acknowledgements
+
+- https://github.com/loroid/AssPythonScripts/tree/main/AssCleanRedundantTags
+- https://github.com/unanimated/luaegisub/blob/master/ua.ScriptCleanup.lua
+- https://github.com/TypesettingTools/line0-Aegisub-Scripts/blob/master/l0.ASSWipe.moon
+- https://github.com/TypesettingTools/ASSFoundation
+- https://github.com/weizhenye/ass-compiler
+- https://github.com/MontageSubs/ass-subset
