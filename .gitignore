@@ -1,0 +1,6 @@
+dist/
+/subtrim
+*.exe
+*.dll
+*.so
+*.dylib
